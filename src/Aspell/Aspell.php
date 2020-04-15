@@ -34,6 +34,11 @@ class Aspell extends Ispell
     private $supportedLanguages;
 
     /**
+     * @var string
+     */
+    private $dictionaryName;
+
+    /**
      * @var Dictionary
      */
     private $personalDictionary;
@@ -103,6 +108,14 @@ class Aspell extends Ispell
     }
 
     /**
+     * @param string $name
+     */
+    public function setDictionaryName(string $name): void
+    {
+        $this->dictionaryName = $name;
+    }
+
+    /**
      * Create arguments for external speller.
      *
      * @param EncodingAwareSource $source    Text source to check.
@@ -127,6 +140,10 @@ class Aspell extends Ispell
 
         if ($this->personalDictionary !== null) {
             $args[] = '--personal=' . $this->personalDictionary->getPath();
+        }
+
+        if ($this->dictionaryName !== null) {
+            $args[] = '--master=' . $this->dictionaryName;
         }
 
         return $args;
